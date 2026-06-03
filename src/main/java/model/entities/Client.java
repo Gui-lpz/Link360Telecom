@@ -126,5 +126,10 @@ public class Client {
         this.mobileLines = mobileLines;
     }
 
+    @Override
+    public String toString() {
+        return "Client{" + "id=" + id + ", identification=" + identification + ", name=" + name + ", firstSurname=" + firstSurname + ", secondSurname=" + secondSurname + ", address=" + address + ", email=" + email + ", contactPhone=" + contactPhone + ", entryDate=" + entryDate + ", clientType=" + clientType + ", mobileLines=" + mobileLines + '}';
+    }
+
    
 }
