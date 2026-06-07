@@ -6,26 +6,21 @@ public class User {
     private String username;
     private String password;
     private UserRole role;
-    private Integer clientId;
 
     public User() {
     }
 
-    public User(int id, String username, String password,
-                UserRole role, Integer clientId) {
+    public User(int id, String username, String password, UserRole role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
-        this.clientId = clientId;
     }
 
-    public User(String username, String password,
-                UserRole role, Integer clientId) {
+    public User(String username, String password, UserRole role) {
         this.username = username;
         this.password = password;
         this.role = role;
-        this.clientId = clientId;
     }
 
     public int getId() {
@@ -34,7 +29,7 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
+    } 
 
     public String getUsername() {
         return username;
@@ -58,14 +53,6 @@ public class User {
 
     public void setRole(UserRole role) {
         this.role = role;
-    }
-
-    public Integer getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(Integer clientId) {
-        this.clientId = clientId;
     }
 
     @Override
