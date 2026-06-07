@@ -11,7 +11,8 @@ public class User {
     public User() {
     }
 
-    public User(int id, String username, String password, UserRole role, Integer clientId) {
+    public User(int id, String username, String password,
+                UserRole role, Integer clientId) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -19,7 +20,8 @@ public class User {
         this.clientId = clientId;
     }
 
-    public User(String username, String password, UserRole role, Integer clientId) {
+    public User(String username, String password,
+                UserRole role, Integer clientId) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -32,7 +34,7 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    } 
+    }
 
     public String getUsername() {
         return username;
@@ -64,5 +66,10 @@ public class User {
 
     public void setClientId(Integer clientId) {
         this.clientId = clientId;
+    }
+
+    @Override
+    public String toString() {
+        return username + " (" + role + ")";
     }
 }
