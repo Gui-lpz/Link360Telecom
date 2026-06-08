@@ -23,13 +23,18 @@ public class ClientData {
     }
 
     public void add(Client client) throws Exception {
+        try (Connection conn = DbConnection_Link360Telecom.getConnection()) {
+            add(client, conn);
+        }
+    }
+
+    public void add(Client client, Connection conn) throws Exception {
         String sql = "INSERT INTO Client "
-                + "(identification, name, first_surname, second_surname, address, email, contact_phone, entry_date, client_type) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "(identification, name, first_surname, second_surname, address, "
+                + " email, contact_phone, entry_date, client_type, password) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DbConnection_Link360Telecom.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, client.getIdentification());
             stmt.setString(2, client.getName());
             stmt.setString(3, client.getFirstSurname());
@@ -39,7 +44,7 @@ public class ClientData {
             stmt.setString(7, client.getContactPhone());
             stmt.setDate(8, Date.valueOf(client.getEntryDate()));
             stmt.setString(9, client.getClientType().name());
-
+            stmt.setString(10, client.getPassword());
             stmt.executeUpdate();
         }
     }
@@ -51,14 +56,10 @@ public class ClientData {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
-
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return map(rs);
-                }
+                if (rs.next()) return map(rs);
             }
         }
-
         return null;
     }
 
@@ -70,11 +71,8 @@ public class ClientData {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
-            while (rs.next()) {
-                list.add(map(rs));
-            }
+            while (rs.next()) list.add(map(rs));
         }
-
         return list;
     }
 
@@ -109,5 +107,34 @@ public class ClientData {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         }
+    }
+
+    public Client findByEmail(String email) throws Exception {
+        String sql = "SELECT * FROM Client WHERE email = ?";
+
+        try (Connection conn = DbConnection_Link360Telecom.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return map(rs);
+            }
+        }
+        return null;
+    }
+
+    public Client login(String email, String password) throws Exception {
+        String sql = "SELECT * FROM Client WHERE email = ? AND password = ?";
+
+        try (Connection conn = DbConnection_Link360Telecom.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, email);
+            stmt.setString(2, password);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return map(rs);
+            }
+        }
+        return null;
     }
 }

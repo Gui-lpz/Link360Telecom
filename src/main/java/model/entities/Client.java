@@ -15,6 +15,7 @@ public class Client {
     private String contactPhone;
     private LocalDate entryDate;
     private ClientType clientType;
+    private String password;
 
     private ArrayList<MobileLine> mobileLines;
 
@@ -22,6 +23,23 @@ public class Client {
         this.mobileLines = new ArrayList<>();
     }
 
+    public Client(int id, String identification, String name, String firstSurname, String secondSurname, String address, String email, String contactPhone, LocalDate entryDate, ClientType clientType, String password, ArrayList<MobileLine> mobileLines) {
+        this.id = id;
+        this.identification = identification;
+        this.name = name;
+        this.firstSurname = firstSurname;
+        this.secondSurname = secondSurname;
+        this.address = address;
+        this.email = email;
+        this.contactPhone = contactPhone;
+        this.entryDate = entryDate;
+        this.clientType = clientType;
+        this.password = password;
+        this.mobileLines = mobileLines;
+    }
+
+  
+    
     public Client(int id, String identification, String name, String firstSurname,
                   String secondSurname, String address, String email,
                   String contactPhone, LocalDate entryDate, ClientType clientType) {
@@ -38,6 +56,14 @@ public class Client {
         this.mobileLines = new ArrayList<>();
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
     public int getId() {
         return id;
     }
