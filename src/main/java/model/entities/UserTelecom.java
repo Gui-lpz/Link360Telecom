@@ -1,28 +1,38 @@
 package model.entities;
 
-public class User {
+public class UserTelecom {
 
     private int id;
     private String username;
+    private String email;
     private String password;
     private UserRole role;
 
-    public User() {
+    public UserTelecom() {
     }
 
-    public User(int id, String username, String password, UserRole role) {
+    public UserTelecom(int id, String username, String password, UserRole role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
     }
 
-    public User(String username, String password, UserRole role) {
-        this.username = username;
-        this.password = password;
+    public UserTelecom(String email, String password, UserRole role) { 
+        this.email = email;
         this.role = role;
+        this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    
     public int getId() {
         return id;
     }
@@ -57,6 +67,8 @@ public class User {
 
     @Override
     public String toString() {
-        return username + " (" + role + ")";
+        return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", role=" + role + '}';
     }
+
+    
 }

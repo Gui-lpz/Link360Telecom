@@ -27,8 +27,7 @@ public class PlanServiceData {
                 + "included_messages, excess_cost, commercial_category_id) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DbConnection_Link360Telecom.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DbConnection_Link360Telecom.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, plan.getCode());
             stmt.setString(2, plan.getName());
@@ -47,8 +46,7 @@ public class PlanServiceData {
     public Plan findById(int id) throws Exception {
         String sql = "SELECT * FROM PlanService WHERE id = ?";
 
-        try (Connection conn = DbConnection_Link360Telecom.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DbConnection_Link360Telecom.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
 
@@ -66,9 +64,7 @@ public class PlanServiceData {
         ArrayList<Plan> list = new ArrayList<>();
         String sql = "SELECT * FROM PlanService";
 
-        try (Connection conn = DbConnection_Link360Telecom.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try (Connection conn = DbConnection_Link360Telecom.getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 list.add(map(rs));
@@ -78,13 +74,34 @@ public class PlanServiceData {
         return list;
     }
 
+    public ArrayList<Plan> getAllWithCategory() throws Exception {
+        ArrayList<Plan> list = new ArrayList<>();
+        String sql = "SELECT p.id, p.code, p.name, p.description, "
+                + "       p.monthly_fee, p.included_gb, p.included_minutes, "
+                + "       p.included_messages, p.excess_cost, p.commercial_category_id, "
+                + "       c.description AS category_description, "
+                + "       c.max_connection_speed "
+                + "FROM PlanService p "
+                + "INNER JOIN CommercialCategory c ON p.commercial_category_id = c.id";
+
+        try (Connection conn = DbConnection_Link360Telecom.getConnection(); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Plan plan = map(rs);
+                plan.setCategoryDescription(rs.getString("category_description"));
+                plan.setMaxConnectionSpeed(rs.getString("max_connection_speed"));
+                list.add(plan);
+            }
+        }
+        return list;
+    }
+
     public void update(Plan plan) throws Exception {
         String sql = "UPDATE PlanService SET code=?, name=?, description=?, monthly_fee=?, "
                 + "included_gb=?, included_minutes=?, included_messages=?, excess_cost=?, "
                 + "commercial_category_id=? WHERE id=?";
 
-        try (Connection conn = DbConnection_Link360Telecom.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DbConnection_Link360Telecom.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, plan.getCode());
             stmt.setString(2, plan.getName());
@@ -104,8 +121,7 @@ public class PlanServiceData {
     public void delete(int id) throws Exception {
         String sql = "DELETE FROM PlanService WHERE id = ?";
 
-        try (Connection conn = DbConnection_Link360Telecom.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DbConnection_Link360Telecom.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
             stmt.executeUpdate();

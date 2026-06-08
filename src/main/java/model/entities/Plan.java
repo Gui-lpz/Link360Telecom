@@ -14,10 +14,30 @@ public class Plan {
     private int includedMessages;
     private BigDecimal excessCost;
     private int commercialCategoryId;
+    
+    private String categoryDescription;
+    private String maxConnectionSpeed;
 
     public Plan() {
     }
 
+    public Plan(int id, String code, String name, String description, BigDecimal monthlyFee, double includedGB, int includedMinutes, int includedMessages, BigDecimal excessCost, int commercialCategoryId, String categoryDescription, String maxConnectionSpeed) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.description = description;
+        this.monthlyFee = monthlyFee;
+        this.includedGB = includedGB;
+        this.includedMinutes = includedMinutes;
+        this.includedMessages = includedMessages;
+        this.excessCost = excessCost;
+        this.commercialCategoryId = commercialCategoryId;
+        this.categoryDescription = categoryDescription;
+        this.maxConnectionSpeed = maxConnectionSpeed;
+    }
+
+    
+    
     public Plan(int id, String code, String name, String description, BigDecimal monthlyFee, double includedGB, int includedMinutes, int includedMessages, BigDecimal excessCost, int commercialCategoryId) {
         this.id = id;
         this.code = code;
@@ -111,10 +131,25 @@ public class Plan {
         this.commercialCategoryId = commercialCategoryId;
     }
 
+    public String getCategoryDescription() {
+        return categoryDescription;
+    }
+
+    public void setCategoryDescription(String v) {
+        this.categoryDescription = v;
+    }
+
+    public String getMaxConnectionSpeed() {
+        return maxConnectionSpeed;
+    }
+
+    public void setMaxConnectionSpeed(String v) {
+        this.maxConnectionSpeed = v;
+    }
+
     @Override
     public String toString() {
         return "Plan{" + "id=" + id + ", code=" + code + ", name=" + name + ", description=" + description + ", monthlyFee=" + monthlyFee + ", includedGB=" + includedGB + ", includedMinutes=" + includedMinutes + ", includedMessages=" + includedMessages + ", excessCost=" + excessCost + ", commercialCategoryId=" + commercialCategoryId + '}';
     }
-
 
 }
